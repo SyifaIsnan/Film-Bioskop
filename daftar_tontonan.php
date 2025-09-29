@@ -1,17 +1,15 @@
 <?php
-require "koneksi.php";
-$data = mysqli_query($conn, "SELECT * FROM film") or die(mysqli_error($conn));
+session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Daftar Film Bioskop</title>
+  <title>Daftar Tontonan</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
   <div class="navbar">
     <h1>FilmBioskop</h1>
     <ul>
@@ -21,18 +19,22 @@ $data = mysqli_query($conn, "SELECT * FROM film") or die(mysqli_error($conn));
     </ul>
   </div>
 
-  <!-- Daftar Film -->
   <section>
-    <h2>Daftar Film</h2>
+    <h2>Daftar Tontonan Anda</h2>
     <div class="film-list">
-      <?php while($film = mysqli_fetch_assoc($data)) { ?>
-        <a href="detail_film.php?id=<?= $film['id'] ?>">
+      <?php 
+      if(isset($_SESSION['tontonan'])){
+        foreach($_SESSION['tontonan'] as $film){ ?>
           <div class="film-card">
-            <img src="img/<?= $film['poster'] ?>" alt="<?= $film['judul'] ?>">
+            <img src="<?= $film['poster'] ?>" alt="<?= $film['judul'] ?>">
             <h3><?= $film['judul'] ?></h3>
           </div>
-        </a>
-      <?php } ?>
+      <?php 
+        }
+      } else {
+        echo "<p>Belum ada film di daftar tontonan.</p>";
+      }
+      ?>
     </div>
   </section>
 </body>

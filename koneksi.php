@@ -1,5 +1,5 @@
 <?php
 
-$kon = mysqli_connect("localhost","root","","");
+$conn = mysqli_connect("localhost","root","","filmBioskop");
 
 ?>
